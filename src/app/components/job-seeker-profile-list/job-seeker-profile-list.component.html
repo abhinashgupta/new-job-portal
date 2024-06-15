@@ -1,0 +1,23 @@
+<div class="job-seeker-profile-list">
+  <h2>Job Seeker Profiles</h2>
+
+  <div class="search">
+    <form [formGroup]="searchForm" (ngSubmit)="searchJobSeekers()">
+      <label>Search Job Seekers:</label>
+      <input formControlName="searchTerm" />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <div class="job-seeker-list">
+    <ul>
+      <li *ngFor="let jobSeeker of jobSeekers">
+        <h3>{{ jobSeeker.name }}</h3>
+        <p><strong>Email:</strong> {{ jobSeeker.email }}</p>
+        <p><strong>Skills:</strong> {{ getSkills(jobSeeker) }}</p>
+        <p><strong>Education:</strong> {{ getEducation(jobSeeker) }}</p>
+        <p><strong>Work Experience:</strong> {{ getWorkExperience(jobSeeker) }}</p>
+      </li>
+    </ul>
+  </div>
+</div>

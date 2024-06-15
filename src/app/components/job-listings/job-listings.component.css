@@ -1,0 +1,14 @@
+.job-listing {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+.job-listing h3 {
+  margin: 0 0 8px 0;
+}
+
+.job-listing p {
+  margin: 4px 0;
+}

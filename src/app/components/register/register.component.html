@@ -1,0 +1,67 @@
+<div class="form">
+  <h2>Register</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+    <input type="text" placeholder="Email" formControlName="email" /><br />
+    <span style="color: red;" *ngIf="email?.invalid && email?.touched">
+      Email is required
+    </span><br />
+    
+    <input type="password" placeholder="Password" formControlName="password" /><br />
+    <span style="color: red;" *ngIf="password?.invalid && password?.touched">
+      Password is required (minimum 6 characters)
+    </span><br />
+    
+    <label for="role">Choose Role:</label>
+    <select formControlName="role" id="role">
+      <option value="jobseeker">Job Seeker</option>
+      <option value="recruiter">Recruiter</option>
+    </select><br />
+    
+    <div *ngIf="role?.value === 'jobseeker'">
+      <h3>Education</h3>
+      <div formArrayName="education">
+        <div *ngFor="let edu of education.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Degree" formControlName="degree" /><br />
+          <input type="text" placeholder="University" formControlName="university" /><br />
+          <input type="text" placeholder="Year" formControlName="year" /><br />
+          <span style="color: red;" *ngIf="edu.invalid && edu.touched">
+            All fields are required
+          </span><br />
+        </div>
+      </div>
+      <button type="button" (click)="addEducation()">Add Education</button>
+
+      <h3>Skills</h3>
+      <div formArrayName="skills">
+        <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Skill" formControlName="name" /><br />
+          <span style="color: red;" *ngIf="skill.invalid && skill.touched">
+            Skill is required
+          </span><br />
+        </div>
+      </div>
+      <button type="button" (click)="addSkill()">Add Skill</button>
+
+      <h3>Work Experience</h3>
+      <div formArrayName="workExperience">
+        <div *ngFor="let work of workExperience.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Title" formControlName="title" /><br />
+          <input type="text" placeholder="Company" formControlName="company" /><br />
+          <input type="text" placeholder="Start Date" formControlName="startDate" /><br />
+          <input type="text" placeholder="End Date" formControlName="endDate" /><br />
+          <textarea placeholder="Description" formControlName="description"></textarea><br />
+          <span style="color: red;" *ngIf="work.invalid && work.touched">
+            All fields are required
+          </span><br />
+        </div>
+      </div>
+      <button type="button" (click)="addWorkExperience()">Add Work Experience</button>
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+  <div *ngIf="errorMessage" class="errorMessage">
+    {{ errorMessage }}
+  </div>
+  <p>Already registered? <a routerLink="/login">Login</a></p>
+</div>

@@ -1,0 +1,79 @@
+<div class="recruiter-dashboard">
+  <h2>Recruiter Dashboard</h2>
+
+  <div class="recruiter-details">
+    <h3>Welcome, {{ recruiter.name }}</h3>
+    <p><strong>Email:</strong> {{ recruiter.email }}</p>
+  </div>
+
+   <div class="navigation">
+    <a routerLink="/job-seeker-profile-list">Job Seeker Profiles</a>
+  </div>
+
+  <div class="job-posting">
+    <h3>{{ editingJobId ? 'Edit Job' : 'Post a New Job' }}</h3>
+    <form [formGroup]="jobForm" (ngSubmit)="postJob()">
+      <div>
+        <label>Title: <span class="required">*</span></label>
+        <input formControlName="title" />
+        <div *ngIf="jobForm.get('title')?.touched && jobForm.get('title')?.invalid" class="error-message">Title is required</div>
+      </div>
+      <div>
+        <label>Company: <span class="required">*</span></label>
+        <input formControlName="company" />
+        <div *ngIf="jobForm.get('company')?.touched && jobForm.get('company')?.invalid" class="error-message">Company is required</div>
+      </div>
+      <div>
+        <label>Location: <span class="required">*</span></label>
+        <input formControlName="location" />
+        <div *ngIf="jobForm.get('location')?.touched && jobForm.get('location')?.invalid" class="error-message">Location is required</div>
+      </div>
+      <div>
+        <label>Posted Date: <span class="required">*</span></label>
+        <input type="date" formControlName="postedDate" />
+        <div *ngIf="jobForm.get('postedDate')?.touched && jobForm.get('postedDate')?.invalid" class="error-message">Posted Date is required</div>
+      </div>
+      <div>
+        <label>Description: <span class="required">*</span></label>
+        <textarea formControlName="description"></textarea>
+        <div *ngIf="jobForm.get('description')?.touched && jobForm.get('description')?.invalid" class="error-message">Description is required</div>
+      </div>
+      <div>
+        <label>Requirements: <span class="required">*</span></label>
+        <textarea formControlName="requirements"></textarea>
+        <div *ngIf="jobForm.get('requirements')?.touched && jobForm.get('requirements')?.invalid" class="error-message">Requirements are required</div>
+      </div>
+      <div>
+        <label>Type: <span class="required">*</span></label>
+        <input formControlName="type" />
+        <div *ngIf="jobForm.get('type')?.touched && jobForm.get('type')?.invalid" class="error-message">Type is required</div>
+      </div>
+      <div>
+        <label>Industry: <span class="required">*</span></label>
+        <input formControlName="industry" />
+        <div *ngIf="jobForm.get('industry')?.touched && jobForm.get('industry')?.invalid" class="error-message">Industry is required</div>
+      </div>
+      <button type="submit">{{ editingJobId ? 'Update Job' : 'Post Job' }}</button>
+    </form>
+  </div>
+
+  <div class="job-listing">
+    <h3>Manage Jobs</h3>
+    <ul>
+      <li *ngFor="let job of jobs">
+        <h4>{{ job.title }}</h4>
+        <p>{{ job.description }}</p>
+        <p><strong>Company:</strong> {{ job.company }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p><strong>Posted Date:</strong> {{ job.postedDate }}</p>
+        <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+        <p><strong>Type:</strong> {{ job.type }}</p>
+        <p><strong>Industry:</strong> {{ job.industry }}</p>
+        <button (click)="editJob(job)">Edit</button>
+        <button (click)="deleteJob(job.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+
+  <button (click)="logout()">Logout</button>
+</div>

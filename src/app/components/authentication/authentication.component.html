@@ -1,0 +1,36 @@
+<div *ngIf="!isAuthenticated()">
+  <form (submit)="login()" #loginForm="ngForm">
+    <div>
+      <input 
+        type="text" 
+        placeholder="Email" 
+        [(ngModel)]="username" 
+        name="username" 
+        required 
+        #usernameCtrl="ngModel">
+      <div *ngIf="usernameCtrl.invalid && usernameCtrl.touched" style="color: red;">
+        Email is required
+      </div>
+    </div>
+    
+    <div>
+      <input 
+        type="password" 
+        placeholder="Password" 
+        [(ngModel)]="password" 
+        name="password" 
+        required 
+        #passwordCtrl="ngModel">
+      <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" style="color: red;">
+        Password is required
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+  <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+</div>
+
+<div *ngIf="isAuthenticated()">
+  <button (click)="logout()">Logout</button>
+</div>

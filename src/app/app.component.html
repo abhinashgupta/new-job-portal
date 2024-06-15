@@ -1,0 +1,33 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Job Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/job-listings" routerLinkActive="active">Job Listings</a>
+        </li>
+        <li class="nav-item" *ngIf="isJobSeeker()">
+          <a class="nav-link" routerLink="/job-seeker-profile" routerLinkActive="active">Job Seeker Profile</a>
+        </li>
+        <li class="nav-item" *ngIf="isRecruiter()">
+          <a class="nav-link" routerLink="/recruiter-dashboard" routerLinkActive="active">Recruiter Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main role="main" class="container">
+  <router-outlet></router-outlet>
+</main>
+

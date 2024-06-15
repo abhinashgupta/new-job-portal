@@ -1,0 +1,79 @@
+<div class="profile">
+  <h2>Job Seeker Profile</h2>
+  <div *ngIf="!editing">
+    <p><strong>Email:</strong> {{ currentUser.email }}</p>
+
+    <div *ngIf="currentUser.profilePicture">
+      <img [src]="currentUser.profilePicture" alt="Profile Picture" />
+    </div>
+    <p><strong>Education:</strong></p>
+    <ul>
+      <li *ngFor="let edu of currentUser.education">
+        {{ edu.degree }} from {{ edu.university }} ({{ edu.year }})
+      </li>
+    </ul>
+
+    <p><strong>Skills:</strong></p>
+    <ul>
+      <li *ngFor="let skill of currentUser.skills">{{ skill.name }}</li>
+    </ul>
+
+    <p><strong>Work Experience:</strong></p>
+    <ul>
+      <li *ngFor="let work of currentUser.workExperience">
+        {{ work.title }} at {{ work.company }} from {{ work.startDate }} to {{ work.endDate }}
+        <p>{{ work.description }}</p>
+      </li>
+    </ul>
+
+    <button (click)="editProfile()">Edit Profile</button>
+    <button (click)="logout()">Logout</button>
+  </div>
+
+  <div *ngIf="editing">
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <div>
+        <label>Email: </label>
+        <input formControlName="email" [disabled]="true" />
+      </div>
+
+      <div formArrayName="education">
+        <div *ngFor="let edu of education.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Degree" formControlName="degree" />
+          <input type="text" placeholder="University" formControlName="university" />
+          <input type="text" placeholder="Year" formControlName="year" />
+        </div>
+      </div>
+      <button type="button" (click)="addEducation()">Add Education</button>
+
+      <div formArrayName="skills">
+        <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Skill" formControlName="name" />
+        </div>
+      </div>
+      <button type="button" (click)="addSkill()">Add Skill</button>
+
+      <div formArrayName="workExperience">
+        <div *ngFor="let work of workExperience.controls; let i = index" [formGroupName]="i">
+          <input type="text" placeholder="Title" formControlName="title" />
+          <input type="text" placeholder="Company" formControlName="company" />
+          <input type="text" placeholder="Start Date" formControlName="startDate" />
+          <input type="text" placeholder="End Date" formControlName="endDate" />
+          <textarea placeholder="Description" formControlName="description"></textarea>
+        </div>
+      </div>
+      <button type="button" (click)="addWorkExperience()">Add Work Experience</button>
+
+      <div>
+        <label>Profile Picture: </label>
+        <input type="file" (change)="onFileChange($event)" />
+        <div *ngIf="profileForm.get('profilePicture')?.value">
+          <img [src]="profileForm.get('profilePicture')?.value" alt="Profile Picture" />
+        </div>
+      </div>
+
+      <button type="submit">Save</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+  </div>
+</div>
